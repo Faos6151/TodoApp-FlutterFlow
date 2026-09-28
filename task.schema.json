@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/task.schema.json",
+  "title": "Task",
+  "description": "A document in the tasks collection.",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "details": {
+      "type": "string"
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false
+    },
+    "created": { "$ref": "#/$defs/timestamp" },
+    "user": { "$ref": "#/$defs/userReference" }
+  },
+  "required": ["title", "completed", "created", "user"],
+  "additionalProperties": false,
+  "$defs": {
+    "timestamp": {
+      "description": "Firestore timestamp, serialized as an RFC 3339 date-time string.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "userReference": {
+      "description": "Firestore document reference to a document in the users collection.",
+      "type": "string",
+      "pattern": "^/users/[^/]+$",
+      "examples": ["/users/DJEwXBO3dxfbPVHpfl6ZmqWpkJxx"]
+    }
+  },
+  "examples": [
+    {
+      "title": "Finish This App",
+      "details": "We are testing add task, but still have more to go.",
+      "completed": true,
+      "created": "2024-06-19T10:05:53-04:00",
+      "user": "/users/DJEwXBO3dxfbPVHpfl6ZmqWpkJxx"
+    }
+  ]
+}
