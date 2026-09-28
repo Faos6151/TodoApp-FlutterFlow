@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/add_task_widget.dart';
 import '/components/task_widget.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
@@ -96,6 +97,31 @@ class _TasksWidgetState extends State<TasksWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      FlutterFlowIconButton(
+                        borderRadius: 8.0,
+                        buttonSize: 50.0,
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          size: 30.0,
+                        ),
+                        onPressed: () async {
+                          GoRouter.of(context).prepareAuthEvent();
+                          await authManager.signOut();
+                          GoRouter.of(context).clearRedirectLocation();
+
+                          context.goNamedAuth(
+                              LoginWidget.routeName, context.mounted);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 Align(
                   alignment: AlignmentDirectional(-1.0, -1.0),
                   child: Padding(
