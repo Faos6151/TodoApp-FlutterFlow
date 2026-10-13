@@ -87,20 +87,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
         ),
         FFRoute(
-          name: HomePageWidget.routeName,
-          path: HomePageWidget.routePath,
-          builder: (context, params) => HomePageWidget(),
-        ),
-        FFRoute(
           name: LoginWidget.routeName,
           path: LoginWidget.routePath,
           builder: (context, params) => LoginWidget(),
-        ),
-        FFRoute(
-          name: TasksWidget.routeName,
-          path: TasksWidget.routePath,
-          builder: (context, params) =>
-              params.isEmpty ? NavBarPage(initialPage: 'tasks') : TasksWidget(),
         ),
         FFRoute(
           name: OnboardingWidget.routeName,
@@ -126,6 +115,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'completed')
               : CompletedWidget(),
+        ),
+        FFRoute(
+          name: HomePageWidget.routeName,
+          path: HomePageWidget.routePath,
+          builder: (context, params) => HomePageWidget(),
+        ),
+        FFRoute(
+          name: TasksWidget.routeName,
+          path: TasksWidget.routePath,
+          builder: (context, params) =>
+              params.isEmpty ? NavBarPage(initialPage: 'tasks') : TasksWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -337,6 +337,10 @@ class FFRoute {
                     duration: transitionInfo.duration,
                     reverseDuration: transitionInfo.duration,
                     alignment: transitionInfo.alignment,
+                    curve: transitionInfo.transitionType ==
+                            PageTransitionType.scale
+                        ? const Interval(0.0, 0.5)
+                        : Curves.linear,
                     child: child,
                   ).buildTransitions(
                     context,
